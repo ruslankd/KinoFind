@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kinofind.R
 import com.example.kinofind.databinding.FragmentMainBinding
 import com.example.kinofind.model.AppState
+import com.example.kinofind.model.OnItemViewClickListener
 import com.example.kinofind.model.entities.Film
 import com.example.kinofind.view.adapter.FilmAdapter
 import com.example.kinofind.viewmodel.MainFragmentViewModel
@@ -46,12 +48,26 @@ class MainFragment : Fragment() {
         viewModel.getData()
     }
 
+    @Suppress("NAME_SHADOWING")
     private fun setupRvFilms() {
         rvFilms = binding.rvFilms
         rvFilms.setHasFixedSize(true)
         rvFilms.layoutManager = LinearLayoutManager(context)
 
-        filmAdapter = FilmAdapter(filmList)
+        filmAdapter = FilmAdapter(filmList, object : OnItemViewClickListener {
+            override fun onItemViewClick(film: Film) {
+                val manager = activity?.supportFragmentManager
+                manager?.let { manager ->
+                    val bundle = Bundle().apply {
+                        putParcelable(DetailsFragment.BUNDLE_EXTRA, film)
+                    }
+                    manager.beginTransaction()
+                            .replace(R.id.container, DetailsFragment.newInstance(bundle))
+                            .addToBackStack("")
+                            .commitAllowingStateLoss()
+                }
+            }
+        })
         rvFilms.adapter = filmAdapter
     }
 
@@ -64,13 +80,14 @@ class MainFragment : Fragment() {
             is AppState.Loading -> {}
             is AppState.Error -> {
                 Snackbar
-                        .make(binding.root, "Error", Snackbar.LENGTH_INDEFINITE)
+                        .make(binding.root, getString(R.string.Error), Snackbar.LENGTH_INDEFINITE)
                         .show()
             }
         }
     }
 
     private fun setData(filmData: List<Film>) {
+        filmList.clear()
         filmList.addAll(filmData)
         filmAdapter.notifyDataSetChanged()
     }
