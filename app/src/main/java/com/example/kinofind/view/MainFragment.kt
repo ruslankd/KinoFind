@@ -21,8 +21,11 @@ import java.util.*
 class MainFragment : Fragment() {
 
     companion object {
+        const val BUNDLE_EXTRA = "film"
+
         fun newInstance() = MainFragment()
     }
+
 
     private lateinit var binding: FragmentMainBinding
 
@@ -30,7 +33,9 @@ class MainFragment : Fragment() {
     private lateinit var filmAdapter: FilmAdapter
     private var filmList = LinkedList<Film>()
 
-    private lateinit var viewModel: MainFragmentViewModel
+    private val viewModel: MainFragmentViewModel by lazy {
+        ViewModelProvider(this).get(MainFragmentViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
@@ -42,7 +47,6 @@ class MainFragment : Fragment() {
 
         setupRvFilms()
 
-        viewModel = ViewModelProvider(this).get(MainFragmentViewModel::class.java)
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
 
         viewModel.getData()
@@ -50,16 +54,13 @@ class MainFragment : Fragment() {
 
     @Suppress("NAME_SHADOWING")
     private fun setupRvFilms() {
-        rvFilms = binding.rvFilms
-        rvFilms.setHasFixedSize(true)
-        rvFilms.layoutManager = LinearLayoutManager(context)
 
         filmAdapter = FilmAdapter(filmList, object : OnItemViewClickListener {
             override fun onItemViewClick(film: Film) {
                 val manager = activity?.supportFragmentManager
                 manager?.let { manager ->
                     val bundle = Bundle().apply {
-                        putParcelable(DetailsFragment.BUNDLE_EXTRA, film)
+                        putParcelable(BUNDLE_EXTRA, film)
                     }
                     manager.beginTransaction()
                             .replace(R.id.container, DetailsFragment.newInstance(bundle))
@@ -68,20 +69,26 @@ class MainFragment : Fragment() {
                 }
             }
         })
-        rvFilms.adapter = filmAdapter
+
+        rvFilms = binding.rvFilms.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            adapter = filmAdapter
+        }
     }
 
     private fun renderData(appState: AppState?) {
         when (appState) {
             is AppState.Success -> {
-                val filmData = appState.filmData
-                setData(filmData)
+                setData(appState.filmData)
             }
             is AppState.Loading -> {}
             is AppState.Error -> {
-                Snackbar
-                        .make(binding.root, getString(R.string.Error), Snackbar.LENGTH_INDEFINITE)
-                        .show()
+                rvFilms.showSnackBarWithResource(
+                        R.string.error,
+                        R.string.reload,
+                        { viewModel.getData() }
+                )
             }
         }
     }

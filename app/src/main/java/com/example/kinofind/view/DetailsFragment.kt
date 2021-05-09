@@ -13,24 +13,24 @@ class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val film = arguments?.getParcelable<Film>(BUNDLE_EXTRA)
-        film?.let {
-            binding.tvDetailTitle.text = it.name
-            binding.tvDetailRatingAndYear.text = "Year: ${it.year}\nRating: ${it.rating}"
-            binding.tvDetailDescription.text = it.description
-            binding.ivDetailFilmImage.setImageResource(R.drawable.ic_launcher_foreground)
+        val film = arguments?.getParcelable<Film>(MainFragment.BUNDLE_EXTRA)
+        film?.let { with(binding) {
+                tvDetailTitle.text = it.name
+                tvDetailRatingAndYear.text = "Year: ${it.year}\nRating: ${it.rating}"
+                tvDetailDescription.text = it.description
+                ivDetailFilmImage.setImageResource(R.drawable.ic_launcher_foreground)
+            }
         }
     }
 
     companion object {
-        const val BUNDLE_EXTRA = "film"
 
         fun newInstance(bundle: Bundle): DetailsFragment {
             val fragment = DetailsFragment()
