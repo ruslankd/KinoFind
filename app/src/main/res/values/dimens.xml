@@ -2,4 +2,5 @@
 <resources>
     <dimen name="item_film_title">20sp</dimen>
     <dimen name="card_view_height">80dp</dimen>
+    <dimen name="details_title_text_size">30sp</dimen>
 </resources>

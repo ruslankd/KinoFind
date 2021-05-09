@@ -1,3 +1,12 @@
 package com.example.kinofind.model.entities
 
-data class Film(val name: String, val rating: Double, val year: Int)
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Film(
+        val name: String,
+        val rating: Double,
+        val year: Int,
+        val description: String
+) : Parcelable
