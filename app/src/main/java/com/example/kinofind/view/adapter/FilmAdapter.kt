@@ -11,7 +11,7 @@ import com.example.kinofind.databinding.ItemFilmBinding
 import com.example.kinofind.model.OnItemViewClickListener
 import com.example.kinofind.model.entities.Film
 
-class FilmAdapter(val filmList: List<Film>, val listener: OnItemViewClickListener) :
+class FilmAdapter(private val filmList: List<Film>, val listener: OnItemViewClickListener) :
         RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
 
     private lateinit var binding: ItemFilmBinding

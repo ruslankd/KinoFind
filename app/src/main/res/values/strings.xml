@@ -2,5 +2,6 @@
     <string name="app_name">KinoFind</string>
     <string name="film_image">Film image</string>
     <string name="star">Star</string>
-    <string name="Error">Error</string>
+    <string name="error">Error</string>
+    <string name="reload">Reload</string>
 </resources>
