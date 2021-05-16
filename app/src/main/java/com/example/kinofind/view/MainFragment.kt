@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.kinofind.BuildConfig
 import com.example.kinofind.R
 import com.example.kinofind.databinding.FragmentMainBinding
 import com.example.kinofind.model.AppState
@@ -25,7 +26,6 @@ class MainFragment : Fragment() {
 
         fun newInstance() = MainFragment()
     }
-
 
     private lateinit var binding: FragmentMainBinding
 
@@ -84,9 +84,9 @@ class MainFragment : Fragment() {
             }
             is AppState.Loading -> {}
             is AppState.Error -> {
-                rvFilms.showSnackBarWithResource(
-                        R.string.error,
-                        R.string.reload,
+                rvFilms.showSnackBar(
+                        appState.error?.message,
+                        "Reload",
                         { viewModel.getData() }
                 )
             }

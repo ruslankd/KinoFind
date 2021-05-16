@@ -13,7 +13,14 @@ class MainFragmentViewModel(
 
     fun getLiveData() = liveDataToObserve
 
-    fun getData() = getDataFromLocalSource()
+    fun getData() = getTopRatedFilmsFromServer()
+
+    private fun getTopRatedFilmsFromServer() {
+        liveDataToObserve.value = AppState.Loading
+        Thread {
+            liveDataToObserve.postValue(repository.getTopRatedFilmsFromServer())
+        }.start()
+    }
 
     private fun getDataFromLocalSource() {
         liveDataToObserve.value = AppState.Loading

@@ -36,9 +36,19 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    buildTypes.each {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        def apiKey  = properties.getProperty("tmdb_api_key", "")
+        it.buildConfigField "String", "KINO_API_KEY", apiKey
+    }
 }
 
+
 dependencies {
+    //GSON
+    implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
