@@ -22,9 +22,9 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val film = arguments?.getParcelable<Film>(MainFragment.BUNDLE_EXTRA)
         film?.let { with(binding) {
-                tvDetailTitle.text = it.name
-                tvDetailRatingAndYear.text = "Year: ${it.year}\nRating: ${it.rating}"
-                tvDetailDescription.text = it.description
+                tvDetailTitle.text = it.title
+                tvDetailRatingAndYear.text = "Release date: ${it.release_date}\nRating: ${it.vote_average}"
+                tvDetailDescription.text = it.overview
                 ivDetailFilmImage.setImageResource(R.drawable.ic_launcher_foreground)
             }
         }

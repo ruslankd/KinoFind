@@ -30,9 +30,9 @@ class FilmAdapter(private val filmList: List<Film>, val listener: OnItemViewClic
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(film: Film) = with(binding) {
-            tvFilmName.text = film.name
-            tvYear.text = film.year.toString()
-            tvRating.text = film.rating.toString()
+            tvFilmName.text = film.title
+            tvYear.text = film.release_date
+            tvRating.text = film.vote_average.toString()
             ivFilmImage.setImageResource(R.drawable.ic_launcher_foreground)
             root.setOnClickListener {
                 listener.onItemViewClick(film)
