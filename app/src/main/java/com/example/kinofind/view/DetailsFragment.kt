@@ -1,10 +1,12 @@
 package com.example.kinofind.view
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.kinofind.IMAGE_PATH
 import com.example.kinofind.R
 import com.example.kinofind.databinding.FragmentDetailsBinding
 import com.example.kinofind.model.entities.Film
@@ -25,7 +27,8 @@ class DetailsFragment : Fragment() {
                 tvDetailTitle.text = it.title
                 tvDetailRatingAndYear.text = "Release date: ${it.release_date}\nRating: ${it.vote_average}"
                 tvDetailDescription.text = it.overview
-                ivDetailFilmImage.setImageResource(R.drawable.ic_launcher_foreground)
+                val uri: Uri = Uri.parse("$IMAGE_PATH${film.poster_path}")
+                ivDetailFilmImage.setImageURI(uri)
             }
         }
     }

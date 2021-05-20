@@ -15,3 +15,5 @@ const val DETAILS_FILMS_EXTRA = "FILMS"
 const val TEMP_INVALID = -100
 const val FEELS_LIKE_INVALID = -100
 const val PROCESS_ERROR = "Обработка ошибки"
+
+const val IMAGE_PATH = "https://image.tmdb.org/t/p/w500/"

@@ -70,8 +70,7 @@ class MainFragment : Fragment() {
 
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
 
-        val intent = Intent(requireContext(), FilmLoadService::class.java)
-        FilmLoadService.start(requireContext(), intent)
+        viewModel.loadDataAsync()
     }
 
 
@@ -120,18 +119,6 @@ class MainFragment : Fragment() {
         filmList.clear()
         filmList.addAll(filmData)
         filmAdapter.notifyDataSetChanged()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        LocalBroadcastManager.getInstance(requireContext())
-                .registerReceiver(loadResultsReceiver, IntentFilter(DETAILS_INTENT_FILTER))
-    }
-
-    override fun onStop() {
-        LocalBroadcastManager.getInstance(requireContext())
-                .unregisterReceiver(loadResultsReceiver)
-        super.onStop()
     }
 
 }

@@ -14,6 +14,9 @@ import java.util.*
 import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
+private const val REQUEST_GET = "GET"
+private const val REQUEST_TIMEOUT = 10000
+
 object TopRatedFilmsLoader {
     fun loadFilms(): AppState? {
         try {
@@ -22,8 +25,8 @@ object TopRatedFilmsLoader {
             lateinit var urlConnection: HttpsURLConnection
             try {
                 urlConnection = uri.openConnection() as HttpsURLConnection
-                urlConnection.requestMethod = "GET"
-                urlConnection.readTimeout = 10000
+                urlConnection.requestMethod = REQUEST_GET
+                urlConnection.readTimeout = REQUEST_TIMEOUT
                 val bufferedReader = BufferedReader(InputStreamReader(urlConnection.inputStream))
                 val lines = if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                     getLinesForOld(bufferedReader)
@@ -38,7 +41,8 @@ object TopRatedFilmsLoader {
                                 res.title,
                                 res.vote_average,
                                 res.release_date,
-                                res.overview
+                                res.overview,
+                                res.poster_path
                         ))
                     }
                 }
