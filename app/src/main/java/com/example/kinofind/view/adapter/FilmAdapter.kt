@@ -1,15 +1,15 @@
 package com.example.kinofind.view.adapter
 
-import android.app.Activity
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kinofind.R
+import com.example.kinofind.IMAGE_PATH
 import com.example.kinofind.databinding.ItemFilmBinding
 import com.example.kinofind.model.OnItemViewClickListener
 import com.example.kinofind.model.entities.Film
+
 
 class FilmAdapter(private val filmList: List<Film>, val listener: OnItemViewClickListener) :
         RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
@@ -33,7 +33,8 @@ class FilmAdapter(private val filmList: List<Film>, val listener: OnItemViewClic
             tvFilmName.text = film.title
             tvYear.text = film.release_date
             tvRating.text = film.vote_average.toString()
-            ivFilmImage.setImageResource(R.drawable.ic_launcher_foreground)
+            val uri: Uri = Uri.parse("$IMAGE_PATH${film.poster_path}")
+            ivFilmImage.setImageURI(uri)
             root.setOnClickListener {
                 listener.onItemViewClick(film)
             }

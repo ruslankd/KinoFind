@@ -53,7 +53,8 @@ class FilmLoadService() : JobIntentService() {
                                 res.title,
                                 res.vote_average,
                                 res.release_date,
-                                res.overview
+                                res.overview,
+                                res.poster_path
                         ))
                     }
                 }
