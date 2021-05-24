@@ -1,13 +1,10 @@
 package com.example.kinofind.view
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.net.ConnectivityManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
+import android.view.Menu
+import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import com.example.kinofind.R
 import com.example.kinofind.databinding.ActivityMainBinding
 
@@ -20,8 +17,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        createNotificationChannel()
-
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                     .replace(R.id.container, MainFragment.newInstance())
@@ -29,12 +24,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationChannel =
-                    NotificationChannel("some_channel", "Connectivity", NotificationManager.IMPORTANCE_DEFAULT)
-            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(notificationChannel)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.menu_settings -> {
+                openFragment(SettingsFragment.newInstance())
+                true
+            }
+            R.id.menu_history -> {
+                openFragment(LikeFragment.newInstance())
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun openFragment(fragment: Fragment) {
+        supportFragmentManager.apply {
+            beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .addToBackStack("")
+                    .commitAllowingStateLoss()
         }
     }
 
