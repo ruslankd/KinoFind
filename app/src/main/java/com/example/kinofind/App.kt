@@ -7,6 +7,11 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Fresco.initialize(this);
+        Fresco.initialize(this)
+        appInstance = this
+    }
+
+    companion object {
+        lateinit var appInstance: App
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -63,13 +64,14 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        (activity as AppCompatActivity).supportActionBar?.title = "Kinofind"
+
         setupRvFilms()
-
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-
         viewModel.loadDataAsync()
     }
 
@@ -85,7 +87,7 @@ class MainFragment : Fragment() {
                         putParcelable(BUNDLE_EXTRA, film)
                     }
                     manager.beginTransaction()
-                            .replace(R.id.container, DetailsFragment.newInstance(bundle))
+                            .add(R.id.container, DetailsFragment.newInstance(bundle))
                             .addToBackStack("")
                             .commitAllowingStateLoss()
                 }

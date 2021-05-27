@@ -1,12 +1,16 @@
-package com.example.kinofind.model
+package com.example.kinofind.model.repo
 
+import androidx.room.Database
+import com.example.kinofind.App
+import com.example.kinofind.model.AppState
+import com.example.kinofind.model.TopRatedFilmsLoader
 import com.example.kinofind.model.entities.Film
 import com.example.kinofind.model.rest_entities.BaseDTO
 import com.example.kinofind.model.rest_interaction.BackendRepo
 import retrofit2.Callback
-import java.util.*
 
 class RepositoryImpl : Repository {
+
     override fun getTopRatedFilmsFromServerAsync(callback: Callback<BaseDTO>) {
         BackendRepo.api.getTopRatedFilms().enqueue(callback)
     }

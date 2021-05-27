@@ -1,23 +1,30 @@
 package com.example.kinofind.viewmodel
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.kinofind.App
 import com.example.kinofind.model.AppState
-import com.example.kinofind.model.Repository
-import com.example.kinofind.model.RepositoryImpl
+import com.example.kinofind.model.repo.Repository
+import com.example.kinofind.model.repo.RepositoryImpl
 import com.example.kinofind.model.entities.Film
 import com.example.kinofind.model.rest_entities.BaseDTO
+import com.example.kinofind.viewmodel.SettingsViewModel.Companion.STATE_18
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.Error
-import java.lang.IllegalStateException
 import java.util.*
 
 class MainFragmentViewModel(
         private val liveDataToObserve: MutableLiveData<AppState> = MutableLiveData(),
         private val repository: Repository = RepositoryImpl()
     ) : ViewModel() {
+
+    private val adult: Boolean =
+            App.appInstance.getSharedPreferences(SettingsViewModel.SP_NAME, Context.MODE_PRIVATE)
+                    .getBoolean(STATE_18, false)
 
     fun getLiveData() = liveDataToObserve
 
@@ -48,9 +55,12 @@ class MainFragmentViewModel(
         val callback = object : Callback<BaseDTO> {
             override fun onResponse(call: Call<BaseDTO>, response: Response<BaseDTO>) {
                 if(response.isSuccessful) {
-                    var films = LinkedList<Film>()
+                    val films = LinkedList<Film>()
                     response.body()?.let {
                         for (res in it.results) {
+                            if (!adult && res.adult) {
+                                continue
+                            }
                             films.add(Film(
                                     res.title,
                                     res.vote_average,
