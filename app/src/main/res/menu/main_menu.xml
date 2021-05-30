@@ -13,4 +13,10 @@
         android:title="@string/liked"
         app:showAsAction="never"
         />
+
+    <item
+        android:id="@+id/menu_contacts"
+        android:title="@string/contacts"
+        app:showAsAction="never"
+        />
 </menu>

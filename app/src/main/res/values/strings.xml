@@ -11,4 +11,7 @@
     <string name="save">Save</string>
     <string name="like">like</string>
     <string name="liked">Liked</string>
+    <string name="contacts">Contacts</string>
+    <string name="default_phone">+7 900 000-00-00</string>
+    <string name="permission">Permission!</string>
 </resources>
