@@ -43,6 +43,10 @@ class MainActivity : AppCompatActivity() {
                 openFragment(ContactsFragment.newInstance())
                 true
             }
+            R.id.menu_map -> {
+                openFragment(ActorsMapFragment.newInstance())
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

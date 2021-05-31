@@ -5,10 +5,9 @@ import java.util.concurrent.TimeUnit
 
 private const val TIMEOUT = 10L
 object ApiUtils {
-    private val baseUrlMainPart = "https://api.themoviedb.org/"
-    private val baseUrlVersion = "3/"
-    private val baseUrlType = "movie/"
-    val baseUrl = "$baseUrlMainPart$baseUrlVersion$baseUrlType"
+    private const val baseUrlMainPart = "https://api.themoviedb.org/"
+    private const val baseUrlVersion = "3/"
+    const val baseUrl = "$baseUrlMainPart$baseUrlVersion"
 
     fun getOkHTTPBuilderWithHeaders(): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
