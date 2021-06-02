@@ -14,4 +14,7 @@
     <string name="contacts">Contacts</string>
     <string name="default_phone">+7 900 000-00-00</string>
     <string name="permission">Permission!</string>
+    <string name="search">Search</string>
+    <string name="enter_query">Actor name (e.g. Brad Pitt)</string>
+    <string name="actors_map">Actors map</string>
 </resources>
