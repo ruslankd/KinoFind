@@ -41,14 +41,15 @@ class ActorsMapFragment : Fragment() {
 
     companion object {
         fun newInstance() = ActorsMapFragment()
+        private const val DEFAULT_ID = 0L
     }
 
     private val callbackWithId = object : Callback<BaseActorByNameDTO> {
         override fun onResponse(call: Call<BaseActorByNameDTO>, response: Response<BaseActorByNameDTO>) {
             if(response.isSuccessful) {
-                var id = 0L
+                var id = DEFAULT_ID
                 response.body()?.let {
-                    id = it.results[0].id
+                    id = it.results.first().id
                 }
                 BackendRepo.api.getActorById(id).enqueue(callbackWithBirthdayPlace)
             } else {
@@ -78,7 +79,6 @@ class ActorsMapFragment : Fragment() {
         override fun onFailure(call: Call<BaseActorDTO>, t: Throwable) {
             Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
         }
-
     }
 
     private fun initSearchByAddress(place: String) {
