@@ -17,4 +17,5 @@
     <string name="search">Search</string>
     <string name="enter_query">Actor name (e.g. Brad Pitt)</string>
     <string name="actors_map">Actors map</string>
+    <string name="free">FREE</string>
 </resources>

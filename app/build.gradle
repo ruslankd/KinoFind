@@ -38,6 +38,17 @@ android {
     buildFeatures {
         viewBinding true
     }
+    flavorDimensions 'version'
+    productFlavors {
+        free {
+            dimension 'version'
+            versionNameSuffix '.free'
+        }
+        paid {
+            dimension 'version'
+            versionNameSuffix '.paid'
+        }
+    }
 
     buildTypes.each {
         Properties properties = new Properties()
